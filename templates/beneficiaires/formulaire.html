@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block titre %}
+  {% if beneficiaire %}Modifier {{ beneficiaire }}{% else %}Nouveau bénéficiaire{% endif %}
+{% endblock %}
+{% block contenu %}
+  <h1>
+    {% if beneficiaire %}
+      Modifier {{ beneficiaire }}
+    {% else %}
+      Nouveau bénéficiaire
+    {% endif %}
+  </h1>
+
+  {% if doublons %}
+    <div role="alert">
+      <p>
+        Un bénéficiaire portant les mêmes nom, prénom et date de naissance
+        existe déjà dans ce village :
+      </p>
+      <ul>
+        {% for doublon in doublons %}
+          <li>
+            <a href="{% url 'beneficiaires:detail' doublon.pk %}">{{ doublon }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+      <p>Vérifiez qu'il ne s'agit pas de la même personne avant de continuer.</p>
+    </div>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ formulaire.as_p }}
+    {% if doublons %}
+      <input type="hidden" name="confirmer" value="1">
+      <button type="submit">Enregistrer malgré tout</button>
+    {% else %}
+      <button type="submit">Enregistrer</button>
+    {% endif %}
+  </form>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block titre %}{{ beneficiaire }}{% endblock %}
+{% block contenu %}
+  <h1>{{ beneficiaire }}</h1>
+
+  <dl>
+    <dt>Sexe</dt><dd>{{ beneficiaire.get_sexe_display }}</dd>
+    <dt>Date de naissance</dt><dd>{{ beneficiaire.date_naissance|default:"—" }}</dd>
+    <dt>Village</dt><dd>{{ beneficiaire.village }}</dd>
+    <dt>Profession</dt><dd>{{ beneficiaire.profession|default:"—" }}</dd>
+    <dt>Nombre d'enfants</dt><dd>{{ beneficiaire.nombre_enfants }}</dd>
+    <dt>Statut</dt><dd>{{ beneficiaire.get_statut_display }}</dd>
+
+    {% if "numero_cin" in champs_visibles %}
+      <dt>Numéro CIN</dt><dd>{{ beneficiaire.numero_cin|default:"—" }}</dd>
+    {% endif %}
+    {% if "numero_passeport" in champs_visibles %}
+      <dt>Passeport</dt><dd>{{ beneficiaire.numero_passeport|default:"—" }}</dd>
+    {% endif %}
+    {% if "revenu" in champs_visibles %}
+      <dt>Revenu</dt><dd>{{ beneficiaire.revenu|default:"—" }}</dd>
+    {% endif %}
+  </dl>
+
+  <h2>Aides reçues</h2>
+  <table>
+    <thead>
+      <tr><th>Campagne</th><th>Date</th><th>Village</th><th>Quantité</th></tr>
+    </thead>
+    <tbody>
+      {% for aide in historique %}
+        <tr>
+          <td>{{ aide.campagne }}</td>
+          <td>{{ aide.date_distribution }}</td>
+          <td>{{ aide.village }}</td>
+          <td>{{ aide.quantite }} {{ aide.unite }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4">Aucune aide enregistrée à ce jour.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if peut_modifier %}
+    <a href="{% url 'beneficiaires:modifier' beneficiaire.pk %}">Modifier</a>
+  {% endif %}
+  <a href="{% url 'beneficiaires:liste' %}">Retour à la liste</a>
+{% endblock %}

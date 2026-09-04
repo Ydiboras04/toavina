@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titre %}ONG E.F.F.M{% endblock %}</title>
+</head>
+<body>
+  <header>
+    <a href="{% url 'beneficiaires:liste' %}">ONG E.F.F.M</a>
+    <nav>
+      <a href="{% url 'beneficiaires:liste' %}">Bénéficiaires</a>
+      <a href="{% url 'campagnes:liste' %}">Campagnes</a>
+      <a href="{% url 'campagnes:distributions' %}">Distributions</a>
+    </nav>
+    {% if user.is_authenticated %}
+      <span>{{ user }}</span>
+    {% endif %}
+  </header>
+  <main>
+    {% block contenu %}{% endblock %}
+  </main>
+</body>
+</html>

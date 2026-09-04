@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block titre %}Distributions{% endblock %}
+{% block contenu %}
+  <h1>Distributions</h1>
+
+  {% if peut_enregistrer %}
+    <a href="{% url 'campagnes:enregistrer' %}">Enregistrer une distribution</a>
+  {% endif %}
+
+  <table>
+    <thead>
+      <tr>
+        <th>Bénéficiaire</th><th>Campagne</th><th>Date</th>
+        <th>Village</th><th>Quantité</th><th>Saisie par</th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for distribution in distributions %}
+        <tr>
+          <td>{{ distribution.beneficiaire }}</td>
+          <td>{{ distribution.campagne }}</td>
+          <td>{{ distribution.date_distribution }}</td>
+          <td>{{ distribution.village }}</td>
+          <td>{{ distribution.quantite }} {{ distribution.unite }}</td>
+          <td>{{ distribution.saisie_par }}</td>
+          <td>
+            {% if peut_enregistrer %}
+              <a href="{% url 'campagnes:annuler' distribution.pk %}">Annuler</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="7">Aucune distribution enregistrée.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

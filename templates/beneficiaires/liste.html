@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block titre %}Bénéficiaires{% endblock %}
+{% block contenu %}
+  <h1>Bénéficiaires</h1>
+
+  <form method="get">
+    <input type="search" name="recherche" value="{{ recherche }}"
+           placeholder="Nom ou prénom">
+    <button type="submit">Rechercher</button>
+  </form>
+
+  {% if peut_modifier %}
+    <a href="{% url 'beneficiaires:creer' %}">Nouveau bénéficiaire</a>
+  {% endif %}
+
+  <table>
+    <thead>
+      <tr><th>Nom</th><th>Prénom</th><th>Village</th><th>Statut</th></tr>
+    </thead>
+    <tbody>
+      {% for beneficiaire in beneficiaires %}
+        <tr>
+          <td>
+            <a href="{% url 'beneficiaires:detail' beneficiaire.pk %}">
+              {{ beneficiaire.nom }}
+            </a>
+          </td>
+          <td>{{ beneficiaire.prenom }}</td>
+          <td>{{ beneficiaire.village }}</td>
+          <td>{{ beneficiaire.get_statut_display }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4">Aucun bénéficiaire enregistré.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

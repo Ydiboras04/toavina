@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block titre %}
+  {% if annulation %}Annuler une distribution{% else %}Nouvelle distribution{% endif %}
+{% endblock %}
+{% block contenu %}
+  <h1>
+    {% if annulation %}
+      Annuler une distribution
+    {% else %}
+      Enregistrer une distribution
+    {% endif %}
+  </h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ formulaire.as_p }}
+    <button type="submit">
+      {% if annulation %}Confirmer l'annulation{% else %}Enregistrer{% endif %}
+    </button>
+  </form>
+
+  <a href="{% url 'campagnes:distributions' %}">Retour aux distributions</a>
+{% endblock %}

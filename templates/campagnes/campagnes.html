@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block titre %}Campagnes{% endblock %}
+{% block contenu %}
+  <h1>Campagnes</h1>
+  <table>
+    <thead>
+      <tr><th>Code</th><th>Libellé</th><th>Année</th><th>État</th><th>Projet</th></tr>
+    </thead>
+    <tbody>
+      {% for campagne in campagnes %}
+        <tr>
+          <td>{{ campagne.code }}</td>
+          <td>{{ campagne.libelle }}</td>
+          <td>{{ campagne.annee }}</td>
+          <td>{{ campagne.get_etat_display }}</td>
+          <td>{{ campagne.projet.titre }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="5">Aucune campagne enregistrée.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

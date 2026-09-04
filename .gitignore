@@ -1,0 +1,41 @@
+# Environnement virtuel
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# Django
+# La base de développement n'est pas versionnée : elle est reconstruite par
+# `python manage.py migrate`, et contient des données de démonstration ainsi
+# que des comptes de test.
+db.sqlite3
+db.sqlite3-journal
+
+# Fichiers téléversés par les utilisateurs (photos de bénéficiaires,
+# documents) — données personnelles, jamais dans le dépôt.
+media/
+
+# Fichiers statiques collectés pour la production
+staticfiles/
+
+# Secrets : seul `.env.example` est versionné, jamais `.env`
+.env
+
+# Éditeurs
+.vscode/
+.idea/
+*.swp
+*~
+
+# Système
+.DS_Store
+Thumbs.db
+
+# Journaux de travail de l'outillage de développement
+.superpowers/
